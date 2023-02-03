@@ -5,7 +5,7 @@ import GoalScreen from '../screens/goal/GoalScreen';
 import BottomNavigationScreen from '../screens/bottomNavigation/BottomNavigationScreen'
 import TvDetailsScreen from '../screens/tvTracker/TvDetailsScreen';
 import TvTrackerStack from "../routes/tvTrackerStack";
-
+import DrawerStack from './drawerStack';
 
 const Stack = createNativeStackNavigator();
 
@@ -25,9 +25,13 @@ function HomeStack() {
                 options={{ headerShown: false }}
             />
             <Stack.Screen
-             name={tvTrackerStackDestinations.Details}
-              component={TvDetailsScreen} 
-              options={{ headerShown: false }}/>
+                name={tvTrackerStackDestinations.Details}
+                component={TvDetailsScreen}
+                options={{ headerShown: false }} />
+            <Stack.Screen
+                name={homeStackDestinations.Drawer}
+                component={DrawerStack}
+                options={{ headerShown: false }} />
         </Stack.Navigator>
     )
 }

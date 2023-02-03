@@ -2,7 +2,8 @@ const homeStackDestinations = {
     Home: 'Home',
     Goal: 'Goals',
     BottomNavigation: 'Bottom Navigation Sample',
-    TvTracker: 'TvTracker'
+    TvTracker: 'TvTracker',
+    Drawer: 'Drawer'
 }
 
 const bottomNavigationSampleStackDestinations = {

@@ -26,6 +26,10 @@ function HomeScreen({ navigation }) {
         )
     }
 
+    function gotToDrawer(){
+        navigation.navigate(homeStackDestinations.Drawer)
+    }
+
     async function createDefaultGoalItems() {
         const items = await GoalStorage.getAll()
         if (items != null) {
@@ -53,6 +57,9 @@ function HomeScreen({ navigation }) {
             </Pressable>
             <Pressable onPress={gotToTvTrackerFavorites}>
                 <Text style={styles.pressableText}>Go to Tv Tracker Favorites</Text>
+            </Pressable>
+            <Pressable onPress={gotToDrawer}>
+                <Text style={styles.pressableText}>Go to Drawer</Text>
             </Pressable>
         </View>
     </>)
