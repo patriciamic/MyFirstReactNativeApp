@@ -325,6 +325,8 @@ dependencies {
     } else {
         implementation jscFlavor
     }
+
+    implementation project(':react-native-maps')
 }
 
 if (isNewArchitectureEnabled()) {

@@ -1,9 +1,10 @@
 import 'react-native-gesture-handler';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { tvTrackerStackDestinations } from './destinations';
+import { tvTrackerStackDestinations, drawerStackDestinations } from './destinations';
 import TvScreen from "../screens/tvTracker/TvScreen";
 import TvType from "../screens/tvTracker/TvType";
 import { color } from 'react-native-reanimated';
+import MapScreen from '../screens/map/Map';
 
 const Drawer = createDrawerNavigator();
 
@@ -60,6 +61,17 @@ function DrawerStack() {
                     {
                         drawerInactiveTintColor: color.inactive,
                         drawerActiveTintColor: color.active
+                    }
+                }
+            />
+            <Drawer.Screen
+                name={drawerStackDestinations.Map}
+                component={MapScreen}
+                options = {
+                    {
+                        drawerInactiveTintColor: color.inactive,
+                        drawerActiveTintColor: color.active
+                    
                     }
                 }
             />

@@ -19,4 +19,8 @@ const tvTrackerStackDestinations = {
     Details: 'TvDetails'
 }
 
-export { homeStackDestinations, bottomNavigationSampleStackDestinations, tvTrackerStackDestinations };
+const drawerStackDestinations = {
+    Map: 'Map'
+}
+
+export { homeStackDestinations, bottomNavigationSampleStackDestinations, tvTrackerStackDestinations, drawerStackDestinations };
