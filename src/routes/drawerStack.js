@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { homeStackDestinations, tvTrackerStackDestinations } from './destinations';
+import { homeStackDestinations, tvTrackerStackDestinations, drawerStackDestinations } from './destinations';
 import TvScreen from "../screens/tvTracker/TvScreen";
 import TvType from "../screens/tvTracker/TvType";
 import HomeScreen from '../screens/home/HomeScreen'
