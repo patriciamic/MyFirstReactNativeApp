@@ -11,10 +11,6 @@ function HomeScreen({ navigation }) {
         })
     }
 
-    function goToBottomNavigationSample() {
-        navigation.navigate(homeStackDestinations.BottomNavigation)
-    }
-
     function goToTvTracker() {
         navigation.navigate(homeStackDestinations.TvTracker)
     }
@@ -24,10 +20,6 @@ function HomeScreen({ navigation }) {
             homeStackDestinations.TvTracker,
             { screen: tvTrackerStackDestinations.Favorites }
         )
-    }
-
-    function gotToDrawer(){
-        navigation.navigate(homeStackDestinations.Drawer)
     }
 
     async function createDefaultGoalItems() {
@@ -43,26 +35,51 @@ function HomeScreen({ navigation }) {
     }
 
     return (<>
-        <StatusBar style='dark' />
+        <StatusBar style='light' />
         <View style={styles.container}>
             <Text style={styles.text}>Welcome to my first React Native App!</Text>
-            <Pressable onPress={goToGoals}>
-                <Text style={styles.pressableText}>See your goals</Text>
-            </Pressable>
-            <Pressable onPress={goToBottomNavigationSample}>
-                <Text style={styles.pressableText}>Go to Bottom Navigation Sample</Text>
-            </Pressable>
-            <Pressable onPress={goToTvTracker}>
-                <Text style={styles.pressableText}>Go to Tv Tracker</Text>
-            </Pressable>
-            <Pressable onPress={gotToTvTrackerFavorites}>
-                <Text style={styles.pressableText}>Go to Tv Tracker Favorites</Text>
-            </Pressable>
-            <Pressable onPress={gotToDrawer}>
-                <Text style={styles.pressableText}>Go to Drawer</Text>
-            </Pressable>
+            <View style={[
+                styles.container,
+                styles.contentContainer
+            ]}>
+                <HomeItem
+                    style={styles.firstItem}
+                    onPress={goToGoals}
+                    text='Goals' />
+                <View style={[
+                    styles.rowContentContainer,
+                ]}>
+                    <HomeItem
+                        style={[
+                            styles.firstItem,
+                            styles.secondItem
+                        ]}
+                        onPress={goToTvTracker}
+                        text='Tv Tracker' />
+                    <HomeItem style={[
+                        styles.firstItem,
+                        styles.secondItem,
+                        styles.thirdItem
+                    ]}
+                        onPress={gotToTvTrackerFavorites}
+                        text='Tv Tracker Favorites'
+                    />
+                </View>
+
+            </View>
         </View>
     </>)
+
+
+    function HomeItem(props) {
+        return (
+            <View style={props.style}>
+                <Pressable onPress={props.onPress}>
+                    <Text style={styles.pressableText}>{props.text}</Text>
+                </Pressable>
+            </View>
+        )
+    }
 }
 
 export default HomeScreen
@@ -70,17 +87,55 @@ export default HomeScreen
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: 'center',
-        padding: 16
+        padding: 16,
+        backgroundColor: '#28282B',
+    },
+    contentContainer: {
+        alignContent: 'center'
     },
     text: {
         margin: 30,
         fontSize: 32,
         textAlign: "center",
+        color: 'white',
+
     },
     pressableText: {
-        color: 'blue',
-        fontSize: 18,
-        padding: 8
+        color: '#03001C',
+        fontSize: 21,
+        padding: 8,
+        textAlign: 'center'
+    },
+    firstItem: {
+        backgroundColor: '#E8D2A6',
+        width: '95%',
+        height: '30%',
+        marginTop: 8,
+        borderRadius: 8,
+        borderColor: "#D3D3D3",
+        shadowColor: "#000",
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 3,
+        },
+        shadowOpacity: 0.2,
+        shadowRadius: 8,
+        elevation: 6,
+        alignItems: "center",
+        justifyContent: 'center'
+    },
+    secondItem: {
+        backgroundColor: '#F48484',
+        width: '46%',
+    },
+    thirdItem: {
+        backgroundColor: '#F55050',
+        marginStart: 8
+    },
+    rowContentContainer: {
+        flexDirection: 'row',
+        width: '100%',
+        height: '100%'
     }
 })
