@@ -45,7 +45,8 @@ function HomeScreen({ navigation }) {
                 <HomeItem
                     style={styles.firstItem}
                     onPress={goToGoals}
-                    text='Goals' />
+                    text='Goals' 
+                    textStyle={styles.pressableText}/>
                 <View style={[
                     styles.rowContentContainer,
                 ]}>
@@ -55,7 +56,8 @@ function HomeScreen({ navigation }) {
                             styles.secondItem
                         ]}
                         onPress={goToTvTracker}
-                        text='Tv Tracker' />
+                        text='Tv Tracker'
+                        textStyle={styles.pressableText} />
                     <HomeItem style={[
                         styles.firstItem,
                         styles.secondItem,
@@ -63,6 +65,12 @@ function HomeScreen({ navigation }) {
                     ]}
                         onPress={gotToTvTrackerFavorites}
                         text='Tv Tracker Favorites'
+                        textStyle={[
+                            styles.pressableText,
+                            {
+                                color: '#fff'
+                            }
+                        ]}
                     />
                 </View>
 
@@ -75,7 +83,7 @@ function HomeScreen({ navigation }) {
         return (
             <View style={props.style}>
                 <Pressable onPress={props.onPress}>
-                    <Text style={styles.pressableText}>{props.text}</Text>
+                    <Text style={props.textStyle}>{props.text}</Text>
                 </Pressable>
             </View>
         )

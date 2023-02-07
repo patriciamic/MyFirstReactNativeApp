@@ -44,6 +44,10 @@ function TvScreen({ route, navigation }) {
         })
     }
 
+    function goBack() {
+        navigation.goBack()
+    }
+
     return (
         <>
             <StatusBar style='light' />
@@ -57,8 +61,13 @@ function TvScreen({ route, navigation }) {
                             id={item.id}
                             data={item} />}
                     keyExtractor={(item) => item.id}
-                    contentContainerStyle={{ paddingBottom: 100, paddingTop: 50 }}
+                    contentContainerStyle={{ paddingBottom: route.params.hideBack? 16: 100, paddingTop: route.params.hideBack? 16: 100 }}
                 />
+                {route.params.hideBack ?
+                    '' : <Pressable style={styles.topNavigationContainer} onPress={goBack}>
+                        <Image style={styles.backImage} source={require('../../assets/images/ic_back.png')} />
+                    </Pressable>
+                }
             </View>
         </>
     )
@@ -203,5 +212,17 @@ const styles = StyleSheet.create({
         right: 0,
         fontSize: 12,
         color: '#fff'
-    }
+    },
+    topNavigationContainer: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        marginTop: 60,
+        marginStart: 16
+    },
+    backImage: {
+        width: 24,
+        height: 24,
+        tintColor: '#fff'
+    },
 })

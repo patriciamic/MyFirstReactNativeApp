@@ -55,7 +55,7 @@ function DrawerStack() {
             <Drawer.Screen
                 name={tvTrackerStackDestinations.TopRated}
                 component={TvScreen}
-                initialParams={{ tvType: TvType.TOP_RATED }}
+                initialParams={{ tvType: TvType.TOP_RATED, hideBack: true }}
                 options={
                     {
                         drawerInactiveTintColor: color.inactive,
@@ -66,7 +66,7 @@ function DrawerStack() {
             <Drawer.Screen
                 name={tvTrackerStackDestinations.Popular}
                 component={TvScreen}
-                initialParams={{ tvType: TvType.POPULAR }}
+                initialParams={{ tvType: TvType.POPULAR, hideBack: true }}
                 options={
                     {
                         drawerInactiveTintColor: color.inactive,
@@ -77,7 +77,7 @@ function DrawerStack() {
             <Drawer.Screen
                 name={tvTrackerStackDestinations.Favorites}
                 component={TvScreen}
-                initialParams={{ tvType: TvType.FAVORITES }}
+                initialParams={{ tvType: TvType.FAVORITES, hideBack: true }}
                 options={
                     {
                         drawerInactiveTintColor: color.inactive,
