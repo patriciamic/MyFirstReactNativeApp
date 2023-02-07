@@ -3,29 +3,12 @@ import { useState } from 'react';
 
 function GoalInput(props) {
     const [enteredGoalText, setEnteredGoalText] = useState({ text: '', id: 0 })
-    const [isErrorVisible, setErrorVisibility] = useState(false)
 
     function goalInputHandler(enteredText) {
         setEnteredGoalText(enteredText)
-
-        if (enteredText.length == 0) {
-            setErrorVisibility(false)
-            return;
-        }
-
-        if (enteredText.trim().length == 0) {
-            setErrorVisibility(true)
-            return;
-        }
-
-        setErrorVisibility(false)
     }
 
     function addGoalHandler() {
-        if (isErrorVisible == true) return;
-        if (enteredGoalText.text == undefined) return;
-        if (enteredGoalText.text.trim().length == 0) return;
-
         props.onAddGoal(enteredGoalText)
         setEnteredGoalText('')
         props.onDismiss()
@@ -40,7 +23,6 @@ function GoalInput(props) {
                     placeholder='Enter your text here..'
                     onChangeText={goalInputHandler}
                     value={enteredGoalText} />
-                {isErrorVisible ? <Text style={styles.error}>Invalid Goal!</Text> : ''}
                 <View style={styles.buttonsContaines}>
                     <Button title='Cancel' onPress={props.onDismiss} color='#f31282' />
                     <Button title='Add Goal' onPress={addGoalHandler} color='#b180f0' />
