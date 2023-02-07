@@ -1,7 +1,6 @@
 import { FlatList, StyleSheet, View, Text, Pressable } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import LinearGradient from 'react-native-linear-gradient';
-
 import { useState } from 'react';
 import GoalInput from '../../components/goal/GoalInput';
 import GoalItem from '../../components/goal/GoalItem';
@@ -97,7 +96,7 @@ function GoalScreen({ route, navigation }) {
 
     return (
         <>
-            <StatusBar style='dark' />
+            <StatusBar style='light' />
             <View style={styles.appContainer}>
                 <GoalInput visible={isGoalInputVisible} onAddGoal={addGoalHandler} onDismiss={closeGoalInputHandler} />
                 <GoalItemAction
@@ -121,7 +120,7 @@ function GoalScreen({ route, navigation }) {
                     />
                 </View>
 
-                <LinearGradient colors={['#ffffff00', '#ffffff00', '#808080']} style={styles.linearGradient}>
+                <LinearGradient colors={['#80808000', '#80808000', '#000000']} style={styles.linearGradient}>
                     <Pressable onPress={startGoalInput} style={
                         ({ pressed }) => [
                             { backgroundColor: pressed ? '#9932CC' : '#5e0acc' },
@@ -140,6 +139,7 @@ export default GoalScreen
 const styles = StyleSheet.create({
     appContainer: {
         flex: 1,
+        backgroundColor: '#28282B',
     },
     goalsGontainer: {
         flex: 5,

@@ -1,8 +1,10 @@
 import 'react-native-gesture-handler';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { tvTrackerStackDestinations, drawerStackDestinations } from './destinations';
+import { homeStackDestinations, tvTrackerStackDestinations } from './destinations';
 import TvScreen from "../screens/tvTracker/TvScreen";
 import TvType from "../screens/tvTracker/TvType";
+import HomeScreen from '../screens/home/HomeScreen'
+import GoalScreen from '../screens/goal/GoalScreen';
 import { color } from 'react-native-reanimated';
 import MapScreen from '../screens/map/Map';
 
@@ -32,10 +34,30 @@ function DrawerStack() {
             }}
         >
             <Drawer.Screen
+                name={homeStackDestinations.Home}
+                component={HomeScreen}
+                options={
+                    {
+                        drawerInactiveTintColor: color.inactive,
+                        drawerActiveTintColor: color.active
+                    }
+                }
+            />
+            <Drawer.Screen
+                name={homeStackDestinations.Goal}
+                component={GoalScreen}
+                options={
+                    {
+                        drawerInactiveTintColor: color.inactive,
+                        drawerActiveTintColor: color.active
+                    }
+                }
+            />
+            <Drawer.Screen
                 name={tvTrackerStackDestinations.TopRated}
                 component={TvScreen}
-                initialParams={{ tvType: TvType.TOP_RATED }}
-                options = {
+                initialParams={{ tvType: TvType.TOP_RATED, hideBack: true }}
+                options={
                     {
                         drawerInactiveTintColor: color.inactive,
                         drawerActiveTintColor: color.active
@@ -45,8 +67,8 @@ function DrawerStack() {
             <Drawer.Screen
                 name={tvTrackerStackDestinations.Popular}
                 component={TvScreen}
-                initialParams={{ tvType: TvType.POPULAR }}
-                options = {
+                initialParams={{ tvType: TvType.POPULAR, hideBack: true }}
+                options={
                     {
                         drawerInactiveTintColor: color.inactive,
                         drawerActiveTintColor: color.active
@@ -56,8 +78,8 @@ function DrawerStack() {
             <Drawer.Screen
                 name={tvTrackerStackDestinations.Favorites}
                 component={TvScreen}
-                initialParams={{ tvType: TvType.FAVORITES }}
-                options = {
+                initialParams={{ tvType: TvType.FAVORITES, hideBack: true }}
+                options={
                     {
                         drawerInactiveTintColor: color.inactive,
                         drawerActiveTintColor: color.active
@@ -71,7 +93,7 @@ function DrawerStack() {
                     {
                         drawerInactiveTintColor: color.inactive,
                         drawerActiveTintColor: color.active
-                    
+
                     }
                 }
             />
