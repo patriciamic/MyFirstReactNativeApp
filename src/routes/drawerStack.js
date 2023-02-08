@@ -1,10 +1,12 @@
 import 'react-native-gesture-handler';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { homeStackDestinations, tvTrackerStackDestinations, drawerStackDestinations } from './destinations';
+import { Image } from 'react-native';
 import TvScreen from "../screens/tvTracker/TvScreen";
 import TvType from "../screens/tvTracker/TvType";
 import HomeScreen from '../screens/home/HomeScreen'
 import GoalScreen from '../screens/goal/GoalScreen';
+import CustomDrawer from '../components/CustomDrawer';
 import { color } from 'react-native-reanimated';
 import MapScreen from '../screens/map/Map';
 
@@ -18,6 +20,7 @@ function DrawerStack() {
     }
 
     return (
+
         <Drawer.Navigator
             screenOptions={{
                 drawerStyle: {
@@ -32,6 +35,7 @@ function DrawerStack() {
                     fontWeight: 'bold',
                 }
             }}
+            drawerContent={props => <CustomDrawer {...props} />}
         >
             <Drawer.Screen
                 name={homeStackDestinations.Home}
@@ -39,7 +43,13 @@ function DrawerStack() {
                 options={
                     {
                         drawerInactiveTintColor: color.inactive,
-                        drawerActiveTintColor: color.active
+                        drawerActiveTintColor: color.active,
+                        drawerIcon: ({ color }) => (
+                            <Image
+                                source={require('../assets/images/tvTracker/ic_tv_tracker_home.png')}
+                                style={{ width: 22, height: 22, tintColor: color }}
+                            />
+                        )
                     }
                 }
             />
@@ -49,7 +59,30 @@ function DrawerStack() {
                 options={
                     {
                         drawerInactiveTintColor: color.inactive,
-                        drawerActiveTintColor: color.active
+                        drawerActiveTintColor: color.active,
+                        drawerIcon: ({ color }) => (
+                            <Image
+                                source={require('../assets/images/ic_goals.png')}
+                                style={{ width: 22, height: 22, tintColor: color }}
+                            />
+                        )
+                    }
+                }
+            />
+            <Drawer.Screen
+                name={tvTrackerStackDestinations.Favorites}
+                component={TvScreen}
+                initialParams={{ tvType: TvType.FAVORITES, hideBack: true }}
+                options={
+                    {
+                        drawerInactiveTintColor: color.inactive,
+                        drawerActiveTintColor: color.active,
+                        drawerIcon: ({ color }) => (
+                            <Image
+                                source={require('../assets/images/tvTracker/ic_tv_tracker_favorite.png')}
+                                style={{ width: 22, height: 22, tintColor: color }}
+                            />
+                        )
                     }
                 }
             />
@@ -68,17 +101,6 @@ function DrawerStack() {
                 name={tvTrackerStackDestinations.Popular}
                 component={TvScreen}
                 initialParams={{ tvType: TvType.POPULAR, hideBack: true }}
-                options={
-                    {
-                        drawerInactiveTintColor: color.inactive,
-                        drawerActiveTintColor: color.active
-                    }
-                }
-            />
-            <Drawer.Screen
-                name={tvTrackerStackDestinations.Favorites}
-                component={TvScreen}
-                initialParams={{ tvType: TvType.FAVORITES, hideBack: true }}
                 options={
                     {
                         drawerInactiveTintColor: color.inactive,

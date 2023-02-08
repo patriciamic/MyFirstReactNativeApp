@@ -5,8 +5,8 @@ import { useState } from 'react';
 import GoalInput from '../../components/goal/GoalInput';
 import GoalItem from '../../components/goal/GoalItem';
 import GoalData from '../../data/GoalData';
-import GoalItemAction from '../../components/goal/GoalItemAction';
 import { GoalStorage } from '../../data/GoalStorage';
+import { CustomActionsPopup, CustomAction } from "../../components/CustomActionsPopup";
 
 function GoalScreen({ route, navigation }) {
     const [goals, setGoals] = useState(getInitialGoals())
@@ -40,6 +40,45 @@ function GoalScreen({ route, navigation }) {
 
     function closeGoalInputHandler() {
         setGoalInputVisibility(false)
+    }
+
+    const Action = {
+        MARK: "Mark as done",
+        DELETE: "Delete",
+        CANCEL: "Cancel"
+    }
+
+    function getGoalItemActions() {
+        const markedItems = [
+            new CustomAction(2, Action.DELETE),
+            new CustomAction(3, Action.CANCEL)
+        ]
+
+        const unmarkedItems = [
+            new CustomAction(1, Action.MARK),
+            ...markedItems
+        ]
+
+        var items = unmarkedItems
+        if (goalItemSelected.done) {
+            items = markedItems
+        }
+
+        return items;
+    }
+
+    function onPopupItemPressed(customAction) {
+        closeGoalItemHandler()
+
+        switch (customAction.action) {
+            case Action.MARK:
+                markGoalItemAsDoneHandler(goalItemSelected)
+                break;
+            case Action.DELETE:
+                deleteGoalItemHandler(goalItemSelected)
+                break;
+            case Action.CANCEL: break;
+        }
     }
 
     function markGoalItemAsDoneHandler(data) {
@@ -99,14 +138,6 @@ function GoalScreen({ route, navigation }) {
             <StatusBar style='light' />
             <View style={styles.appContainer}>
                 <GoalInput visible={isGoalInputVisible} onAddGoal={addGoalHandler} onDismiss={closeGoalInputHandler} />
-                <GoalItemAction
-                    visible={isGoalItemActionVisible}
-                    data={goalItemSelected}
-                    title={getGoalItemActionTitle()}
-                    onMarkAdDone={markGoalItemAsDoneHandler}
-                    onDismiss={closeGoalItemHandler}
-                    onDelete={deleteGoalItemHandler}
-                />
                 <View style={styles.goalsGontainer}>
                     <FlatList
                         data={goals}
@@ -129,6 +160,13 @@ function GoalScreen({ route, navigation }) {
                         <Text style={styles.buttonAddText}>Add new goal</Text>
                     </Pressable>
                 </LinearGradient>
+                <CustomActionsPopup
+                    visible={isGoalItemActionVisible}
+                    items={getGoalItemActions()}
+                    title={getGoalItemActionTitle()}
+                    onDismiss={closeGoalItemHandler}
+                    onItemPressed={onPopupItemPressed}
+                />
             </View>
         </>
     )
