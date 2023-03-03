@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, Image, Pressable } from "react-native";
 import { StatusBar } from 'expo-status-bar';
 import LinearGradient from 'react-native-linear-gradient';
 import { DetailsTvData } from "../../data/tvTracker/TvData";
-import { TvRepository } from "../../data/tvTracker/TvRepository";
+import { TvRepository, buildImageUrl } from "../../data/tvTracker/TvRepository";
 import { FavoriteTvData } from "../../data/tvTracker/TvData";
 import { useEffect, useState } from "react";
 import CustomButton from '../../components/CustomButton';
@@ -18,11 +18,11 @@ function TvDetailsScreen({ route, navigation }) {
     }, [])
 
     const backdropImage = data.backdropImageName != null
-        ? repository.buildImageUrl(data.backdropImageName)
+        ? buildImageUrl(data.backdropImageName)
         : require('../../assets/images/ic_image.png');
 
     const posterImage = data.posterImageName != null
-        ? repository.buildImageUrl(data.posterImageName)
+        ? buildImageUrl(data.posterImageName)
         : require('../../assets/images/ic_image.png');
 
     return (
@@ -92,7 +92,6 @@ function TvDetailsScreen({ route, navigation }) {
             )
         ).then(() => {
             setIsFavorite(true)
-
         })
     }
 }

@@ -8,18 +8,19 @@ const TvEndpoint = {
     TOP_RATED: '/top_rated'
 }
 
+BASE_URL = "https://api.themoviedb.org/3/tv"
+IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/w500/'
+
+export function buildImageUrl(imageName) {
+    return this.IMAGE_BASE_URL + imageName
+}
+
 export class TvRepository {
 
-    BASE_URL = "https://api.themoviedb.org/3/tv"
     // TODO find best practice for adding the API Key to URL
     API_KEY = "?api_key=0a416fc6c49f4a04db6e3bd398ef8579"
     // TODO execute the config endpoint in order to get the image base URL
-    IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/w500/'
     FAVORITES_STORED_KEY = "tv_tracker_favorites"
-
-    buildImageUrl(imageName) {
-        return this.IMAGE_BASE_URL + imageName
-    }
 
     /** Gets the Tv List.
      * @param {TvType} tvType - The type category to be fetched
@@ -33,7 +34,7 @@ export class TvRepository {
             }
 
             const tvRoute = tvType == TvType.POPULAR ? TvEndpoint.POPULAR : TvEndpoint.TOP_RATED
-            const URL = this.BASE_URL + tvRoute + this.API_KEY
+            const URL = BASE_URL + tvRoute + this.API_KEY
             console.log("Executing GET for " + tvType + " URL: " + URL)
 
             const response = await fetch(URL, {
@@ -53,7 +54,7 @@ export class TvRepository {
     getTvDetails = async (id) => {
         try {
             const idRoute = '/' + id
-            const URL = this.BASE_URL + idRoute + this.API_KEY
+            const URL = BASE_URL + idRoute + this.API_KEY
             console.log("Executing GET for " + id + " URL: " + URL)
 
             const response = await fetch(URL, {

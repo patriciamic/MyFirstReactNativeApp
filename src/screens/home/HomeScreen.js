@@ -47,6 +47,7 @@ function HomeScreen({ navigation }) {
                     onPress={goToGoals}
                     text='Goals' 
                     textStyle={styles.pressableText}/>
+                    
                 <View style={[
                     styles.rowContentContainer,
                 ]}>

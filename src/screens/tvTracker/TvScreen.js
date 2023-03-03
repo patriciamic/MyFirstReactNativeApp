@@ -1,12 +1,14 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useCallback } from "react";
 import { StatusBar } from 'expo-status-bar';
 import { View, Text, FlatList, Image, StyleSheet, Pressable, ToastAndroid } from "react-native";
 import LinearGradient from 'react-native-linear-gradient';
-import { TvRepository } from "../../data/tvTracker/TvRepository";
-import { tvTrackerStackDestinations, homeStackDestinations } from "../../routes/destinations";
+import { tvTrackerStackDestinations } from "../../routes/destinations";
 import TvType from "./TvType";
 import { useFocusEffect } from "@react-navigation/native";
 import { CustomActionsPopup, CustomAction } from "../../components/CustomActionsPopup";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchTvList } from "../../redux/tvTracker/actions";
+import { buildImageUrl } from "../../data/tvTracker/TvRepository";
 
 const Action = {
     VIEW_DETAILS: "View Details",
@@ -23,26 +25,20 @@ const favoritesPopupActions = [
 
 function TvScreen({ route, navigation }) {
 
-    const [tvItems, setTvItems] = useState([])
-    const repository = new TvRepository();
+    const tvItems = useSelector(state => state.tvReducer)
+    const dispatch = useDispatch()
 
     useFocusEffect(
         useCallback(() => {
             // The screen is focused
             console.log("The " + route.params.tvType + " screen is focused")
-            getData(route.params.tvType)
+            dispatch(fetchTvList(route.params.tvType))
             return () => {
                 // The screen is unfocused
                 console.log("The " + route.params.tvType + " screen is unfocused")
             }
         }, [])
     )
-
-    function getData(tvType) {
-        repository.getTvList(tvType).then((response) => {
-            setTvItems(response)
-        })
-    }
 
     function goBack() {
         navigation.goBack()
@@ -53,7 +49,7 @@ function TvScreen({ route, navigation }) {
             <StatusBar style='light' />
             <View style={styles.container}>
                 <FlatList
-                    data={tvItems}
+                    data={tvItems.data}
                     renderItem={({ item }) =>
                         <TvItem
                             title={item.title}
@@ -76,7 +72,7 @@ function TvScreen({ route, navigation }) {
         const [isActionPopupVisible, setActionPopupVisibility] = useState(false)
 
         const image = props.imageName != null ?
-            repository.buildImageUrl(props.imageName) :
+            buildImageUrl(props.imageName) :
             require('../../assets/images/ic_image.png');
 
         function onTvItemPressedHandler() {
@@ -109,13 +105,12 @@ function TvScreen({ route, navigation }) {
                     navigation.navigate(tvTrackerStackDestinations.Details, { id: props.id });
                     break;
                 case Action.ADD_TO_FAVORITES:
-                    // TODO 
                     ToastAndroid.show("Added to favorites", ToastAndroid.SHORT)
                     break;
                 case Action.REMOVE_FROM_FAVORITES:
-                    repository.removeFromFavorites(props.id).then(() => {
-                        getData(route.params.tvType)
-                    })
+                    // repository.removeFromFavorites(props.id).then(() => {
+                    //     getData(route.params.tvType)
+                    // })
                     break;
                 case Action.CANCEL: break;
             }

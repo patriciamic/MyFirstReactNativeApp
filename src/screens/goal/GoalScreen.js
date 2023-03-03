@@ -55,8 +55,8 @@ function GoalScreen({ route, navigation }) {
         ]
 
         const unmarkedItems = [
+            ...markedItems,
             new CustomAction(1, Action.MARK),
-            ...markedItems
         ]
 
         var items = unmarkedItems
