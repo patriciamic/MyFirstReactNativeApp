@@ -1,20 +1,20 @@
 import { View, Text, StyleSheet, Image, Pressable } from "react-native";
 import { StatusBar } from 'expo-status-bar';
 import LinearGradient from 'react-native-linear-gradient';
-import { DetailsTvData } from "../../data/tvTracker/TvData";
-import { TvRepository, buildImageUrl } from "../../data/tvTracker/TvRepository";
-import { FavoriteTvData } from "../../data/tvTracker/TvData";
-import { useEffect, useState } from "react";
 import CustomButton from '../../components/CustomButton';
+import { useSelector, useDispatch } from "react-redux";
+import { addToFavorites, fetchTvDetails } from "../../redux/tvTracker/actions";
+import { useEffect } from "react";
+import { buildImageUrl } from "../../data/tvTracker/TvRepository";
+import { FavoriteTvData } from "../../data/tvTracker/TvData";
 
 function TvDetailsScreen({ route, navigation }) {
-    let defaultData = new DetailsTvData(" ", " ", " ", " ", " ")
-    const [data, setData] = useState(defaultData)
-    const [isFavorite, setIsFavorite] = useState(false)
-    const repository = new TvRepository();
+    const data = useSelector(state => state.tvDetailsReducer.data)
+    const isFavorite = useSelector(state => state.tvDetailsReducer.isFavorite)
+    const dispatch = useDispatch()
 
     useEffect(() => {
-        getData()
+        dispatch(fetchTvDetails(route.params.id))
     }, [])
 
     const backdropImage = data.backdropImageName != null
@@ -57,25 +57,6 @@ function TvDetailsScreen({ route, navigation }) {
         </>
     )
 
-    function getData() {
-        async function getAllData() {
-            let details = await repository.getTvDetails(route.params.id)
-            let favorites = await repository.getFavorites()
-            return { details, favorites }
-        }
-
-        getAllData().then(({details, favorites}) => {
-            setData(details)
-
-            if (favorites == null) return;
-            favorites.forEach(item => {
-                if (item.id == details.id) {
-                    setIsFavorite(true)
-                }
-            });
-        })
-    }
-
     function goBack() {
         navigation.goBack()
     }
@@ -83,16 +64,16 @@ function TvDetailsScreen({ route, navigation }) {
     function addToFavorite() {
         if (isFavorite) return;
 
-        repository.addToFavorites(
-            new FavoriteTvData(
-                data.id,
-                data.title,
-                data.backdropImageName,
-                new Date()
+        dispatch(
+            addToFavorites(
+                new FavoriteTvData(
+                    data.id,
+                    data.title,
+                    data.backdropImageName,
+                    new Date()
+                )
             )
-        ).then(() => {
-            setIsFavorite(true)
-        })
+        )
     }
 }
 

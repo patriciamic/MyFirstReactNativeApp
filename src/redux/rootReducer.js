@@ -1,8 +1,9 @@
 import { combineReducers} from "redux";
-import { tvReducer } from "./tvTracker/reducer";
+import { tvDetailsReducer, tvReducer } from "./tvTracker/reducer";
 
 const rootReducer = combineReducers({
-    tvReducer: tvReducer
+    tvReducer: tvReducer,
+    tvDetailsReducer: tvDetailsReducer
 })
 
 export default rootReducer

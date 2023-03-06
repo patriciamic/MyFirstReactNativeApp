@@ -7,12 +7,11 @@ import TvType from "./TvType";
 import { useFocusEffect } from "@react-navigation/native";
 import { CustomActionsPopup, CustomAction } from "../../components/CustomActionsPopup";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchTvList } from "../../redux/tvTracker/actions";
+import { fetchTvList, removeFromFavorites } from "../../redux/tvTracker/actions";
 import { buildImageUrl } from "../../data/tvTracker/TvRepository";
 
 const Action = {
     VIEW_DETAILS: "View Details",
-    ADD_TO_FAVORITES: "Add to Favorites",
     REMOVE_FROM_FAVORITES: "Remove from Favorites",
     CANCEL: "Cancel"
 }
@@ -104,15 +103,9 @@ function TvScreen({ route, navigation }) {
                 case Action.VIEW_DETAILS:
                     navigation.navigate(tvTrackerStackDestinations.Details, { id: props.id });
                     break;
-                case Action.ADD_TO_FAVORITES:
-                    ToastAndroid.show("Added to favorites", ToastAndroid.SHORT)
-                    break;
                 case Action.REMOVE_FROM_FAVORITES:
-                    // repository.removeFromFavorites(props.id).then(() => {
-                    //     getData(route.params.tvType)
-                    // })
+                    dispatch(removeFromFavorites(props.id))
                     break;
-                case Action.CANCEL: break;
             }
         }
 
